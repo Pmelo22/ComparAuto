@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MapPin, Heart, Star, ChevronLeft, ChevronRight} from "lucide-react";
-import Image from "next/image";
+import { MapPin, Heart, Star, ChevronLeft, ChevronRight, Search } from "lucide-react";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex items-center overflow-x-auto py-4 scrollbar-hide gap-8">
             <div className="flex flex-col items-center gap-2 min-w-[56px]">
-              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <img src="/placeholder.svg?height=24&width=24" alt="Beachfront" className="h-6 w-6" />
               <span className="text-xs">Beachfront</span>
             </div>
             {/* ... outros itens de categoria ... */}
