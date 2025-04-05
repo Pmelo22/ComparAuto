@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { Search, Menu } from "lucide-react";
-import Image from "next/image";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,15 +17,17 @@ export default function Header() {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image src="/logo.png" alt="Logo" width={32} height={32} className="h-8 w-8" />
+          <img src="../../logo.png" alt="Logo" className="h-8 w-8" />
           <span className="ml-2 text-xl font-bold text-rose-500">ComparAuto</span>
         </Link>
 
         {/* User Menu */}
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="hidden md:flex text-sm font-medium rounded-full">
-            Cadastre sua Oficina
-          </Button>
+        <Link href="/cadastro-oficina">
+        <Button className="bg-rose-500 hover:bg-rose-600">
+          Cadastrar Oficina
+        </Button>
+      </Link>
           <div className="relative">
             <div
               className="flex items-center border rounded-full p-1 shadow-sm cursor-pointer"

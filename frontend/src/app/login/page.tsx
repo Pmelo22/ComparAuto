@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { doc, setDoc, serverTimestamp } from "firebase/firestore"
-import { auth, db } from "../../../firebase"
+import { auth, db } from "@/firebase";  // Usando o alias @/
 import { Eye, EyeOff, AlertCircle } from "lucide-react"
 import "../signup/signup.css"
 
