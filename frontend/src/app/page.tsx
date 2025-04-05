@@ -16,9 +16,60 @@ export default function Home() {
           <div className="flex items-center overflow-x-auto py-4 scrollbar-hide gap-8">
             <div className="flex flex-col items-center gap-2 min-w-[56px]">
               <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Troca de óleo</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Avaliação do carro</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Aplicação de película</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Troca de filtros</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Alinhamento e balanceamento</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Troca de pastilhas</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Polimento e cristalização</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Instalação de acessórios</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Manutenção do ar-condicionado</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Higienização interna</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
               <span className="text-xs">Beachfront</span>
             </div>
-            {/* ... outros itens de categoria ... */}
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Beachfront</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Beachfront</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 min-w-[56px]">
+              <Image src="/logo.png" alt="Beachfront" width={24} height={24} className="h-6 w-6" />
+              <span className="text-xs">Beachfront</span>
+            </div>
           </div>
         </div>
       </div>
