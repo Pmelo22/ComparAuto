@@ -1,14 +1,78 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { MapPin, Heart, Star, ChevronLeft, ChevronRight, Search } from "lucide-react";
+"use client"
+
+import { useEffect, useState } from "react"
+import { onAuthStateChanged } from "firebase/auth"
+import { doc, getDoc } from "firebase/firestore"
+import { auth, db } from "../../firebase"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { MapPin, Heart, Star, ChevronLeft, ChevronRight, Search } from "lucide-react"
+import UserAvatar from "@/components/UserAvatar"
+
+interface UserData {
+  nome?: string
+  email?: string
+  role?: string
+  photoURL?: string
+}
 
 export default function Home() {
+  const [userData, setUserData] = useState<UserData | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const userDoc = await getDoc(doc(db, "users", user.uid))
+          if (userDoc.exists()) {
+            setUserData(userDoc.data() as UserData)
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error)
+        }
+      } else {
+        setUserData(null)
+      }
+      setLoading(false)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header Global */}
       <Header />
+
+      {/* Welcome Banner */}
+      {userData && (
+        <div className="bg-background border-b">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center space-x-4">
+              <UserAvatar size="sm" />
+              <div>
+                <h2 className="text-lg font-medium text-card-foreground">
+                  Bem-vindo, {userData.nome || userData.email}
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {userData.role === "admin" ? "Administrador" : "Usuário"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Category Tabs */}
       <div className="border-b sticky top-[72px] bg-white z-40">
@@ -76,5 +140,5 @@ export default function Home() {
       {/* Footer Global */}
       <Footer />
     </div>
-  );
+  )
 }

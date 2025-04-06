@@ -1,12 +1,12 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth"
 import { doc, setDoc, serverTimestamp } from "firebase/firestore"
-import { auth, db } from "@/firebase";  // Usando o alias @/
+import { auth, db } from "../../../firebase"
 import { Eye, EyeOff, AlertCircle } from "lucide-react"
 import "../signup/signup.css"
 
@@ -19,6 +19,16 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.replace("/")
+      }
+    })
+
+    return () => unsubscribe()
+  }, [router])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -34,8 +44,20 @@ export default function LoginPage() {
 
     try {
       setLoading(true)
-      await signInWithEmailAndPassword(auth, formData.email, formData.password)
-      router.push("/dashboard")
+      const { user } = await signInWithEmailAndPassword(auth, formData.email, formData.password)
+      
+      // Update user data in Firestore
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          email: user.email,
+          lastLogin: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      )
+
+      router.replace("/")
     } catch (err: any) {
       console.error(err)
       if (err.code === "auth/invalid-credential") {
@@ -57,19 +79,21 @@ export default function LoginPage() {
       const result = await signInWithPopup(auth, provider)
       const user = result.user
 
-      // Atualizar ou criar usuário no Firestore
+      // Update or create user in Firestore
       await setDoc(
         doc(db, "users", user.uid),
         {
           nome: user.displayName,
           email: user.email,
+          photoURL: user.photoURL,
           role: "user",
+          lastLogin: serverTimestamp(),
           updatedAt: serverTimestamp(),
         },
-        { merge: true },
+        { merge: true }
       )
 
-      router.push("/dashboard")
+      router.replace("/")
     } catch (err) {
       console.error(err)
       setError("Erro ao entrar com Google. Tente novamente.")
@@ -119,7 +143,12 @@ export default function LoginPage() {
                 placeholder="Digite sua senha"
                 required
               />
-              <button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
+              <button 
+                type="button" 
+                className="password-toggle" 
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
@@ -144,7 +173,12 @@ export default function LoginPage() {
           <span>ou</span>
         </div>
 
-        <button onClick={handleGoogleLogin} className="auth-button google" disabled={loading}>
+        <button 
+          onClick={handleGoogleLogin} 
+          className="auth-button google" 
+          disabled={loading}
+          aria-label="Entrar com Google"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20px" height="20px">
             <path
               fill="#FFC107"
@@ -176,4 +210,3 @@ export default function LoginPage() {
     </div>
   )
 }
-

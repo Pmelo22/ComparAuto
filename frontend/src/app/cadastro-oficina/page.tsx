@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
-import { db, auth } from '@/firebase'
+import { db, auth } from "../../../firebase";
 import { useState } from 'react'
 import Link from 'next/link'
 

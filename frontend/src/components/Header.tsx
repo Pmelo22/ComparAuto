@@ -4,9 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from '@/components/ui/button';
 import { Search, Menu } from "lucide-react";
+import { UserDropdown } from "./UserDropdown";
+import { auth } from "../../firebase";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const user = auth.currentUser; // Adicione esta linha
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -23,46 +26,53 @@ export default function Header() {
 
         {/* User Menu */}
         <div className="flex items-center gap-4">
-        <Link href="/cadastro-oficina">
-        <Button className="bg-rose-500 hover:bg-rose-600">
-          Cadastrar Oficina
-        </Button>
-      </Link>
-          <div className="relative">
-            <div
-              className="flex items-center border rounded-full p-1 shadow-sm cursor-pointer"
-              onClick={toggleMenu}
-            >
-              <Menu className="h-5 w-5 mx-2" />
-              <div className="h-8 w-8 bg-gray-500 rounded-full"></div>
-            </div>
+          <Link href="/cadastro-oficina">
+            <Button className="bg-rose-500 hover:bg-rose-600">
+              Cadastrar Oficina
+            </Button>
+          </Link>
 
-            {/* Dropdown Card */}
-            {isMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
-                <ul className="py-2">
-                  <li>
-                    <Link href="/login">
-                      <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
-                        Entrar
-                      </button>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/signup">
-                      <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
-                        Cadastre-se
-                      </button>
-                    </Link>
-                  </li>
-                </ul>
+          {user ? (
+            // Mostra o UserDropdown quando o usuário está logado
+            <UserDropdown />
+          ) : (
+            // Mostra o menu original quando não está logado
+            <div className="relative">
+              <div
+                className="flex items-center border rounded-full p-1 shadow-sm cursor-pointer"
+                onClick={toggleMenu}
+              >
+                <Menu className="h-5 w-5 mx-2" />
+                <div className="h-8 w-8 bg-gray-500 rounded-full"></div>
               </div>
-            )}
-          </div>
+
+              {/* Dropdown Card */}
+              {isMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
+                  <ul className="py-2">
+                    <li>
+                      <Link href="/login">
+                        <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                          Entrar
+                        </button>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/signup">
+                        <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                          Cadastre-se
+                        </button>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Mobile Search */}
+      {/* Mobile Search (mantido igual) */}
       <div className="md:hidden px-4 pb-4">
         <Button variant="outline" className="w-full flex items-center justify-between rounded-full shadow-sm border">
           <div className="flex items-center">

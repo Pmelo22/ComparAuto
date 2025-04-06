@@ -11,7 +11,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth"
 import { doc, setDoc, serverTimestamp } from "firebase/firestore"
-import { auth, db } from "@/firebase";  // Usando o alias @/
+import { auth, db } from "../../../firebase";
 import { Eye, EyeOff, AlertCircle } from "lucide-react"
 import "./signup.css"
 

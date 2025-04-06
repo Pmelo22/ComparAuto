@@ -10,9 +10,7 @@ const hpp = require('hpp');
 
 const app = express();
 
-// Database connection
-const db = require('./config/db');
-db.connect();
+
 
 // Middleware
 app.use(cors());
